@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-personio-hr",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"description": "n8n community node for Personio HR platform (v2 API)",
 	"keywords": [
 		"n8n-community-node-package",
