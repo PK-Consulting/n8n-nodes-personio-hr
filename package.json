@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-personio-hr",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"description": "n8n community node for Personio HR platform (v2 API)",
 	"keywords": [
 		"n8n-community-node-package",
@@ -29,7 +29,7 @@
 	"scripts": {
 		"predev": "npm run build",
 		"dev": "n8n-node-dev start",
-		"build": "tsc && gulp build:icons",
+		"build": "tsc && gulp default",
 		"lint": "eslint src/ --ext .ts",
 		"lint:fix": "eslint src/ --ext .ts --fix",
 		"prepublishOnly": "npm run build && npm run lint"

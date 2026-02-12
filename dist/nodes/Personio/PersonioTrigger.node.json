@@ -1,16 +1,16 @@
 {
-	"node": "n8n-nodes-personio-hr.personioHr",
+	"node": "n8n-nodes-personio-hr.personioHrTrigger",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": ["HR"],
 	"resources": {
 		"primaryDocumentation": [
 			{
-				"url": "https://developer.personio.de/reference"
+				"url": "https://developer.personio.de/reference/post_v2-webhooks"
 			}
 		]
 	},
-	"alias": ["hr", "employee", "absence", "attendance", "personio"],
+	"alias": ["hr", "employee", "webhook", "personio", "trigger"],
 	"subcategories": {
 		"HR": ["Employee Management"]
 	}
