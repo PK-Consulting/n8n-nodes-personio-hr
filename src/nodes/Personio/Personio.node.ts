@@ -28,6 +28,7 @@ export class Personio implements INodeType {
 		defaults: {
 			name: 'Personio',
 		},
+		usableAsTool: true,
 		inputs: ['main'],
 		outputs: ['main'],
 		credentials: [

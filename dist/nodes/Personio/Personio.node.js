@@ -22,6 +22,7 @@ class Personio {
         defaults: {
             name: 'Personio',
         },
+        usableAsTool: true,
         inputs: ['main'],
         outputs: ['main'],
         credentials: [
