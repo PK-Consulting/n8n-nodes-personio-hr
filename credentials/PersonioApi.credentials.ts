@@ -39,6 +39,12 @@ export class PersonioApi implements ICredentialType {
 			},
 			default: '',
 		},
+		{
+			displayName: 'Expires At',
+			name: 'expiresAt',
+			type: 'hidden',
+			default: 0,
+		},
 	];
 
 	async preAuthentication(
@@ -55,7 +61,8 @@ export class PersonioApi implements ICredentialType {
 			body: `client_id=${encodeURIComponent(credentials.clientId as string)}&client_secret=${encodeURIComponent(credentials.clientSecret as string)}&grant_type=client_credentials`,
 		})) as { access_token: string };
 
-		return { accessToken: response.access_token };
+		const expiresAt = Date.now() + 23 * 60 * 60 * 1000; // 23 hours (token valid for 24h)
+		return { accessToken: response.access_token, expiresAt };
 	}
 
 	authenticate: IAuthenticateGeneric = {

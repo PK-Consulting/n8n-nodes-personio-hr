@@ -32,6 +32,12 @@ class PersonioApi {
             },
             default: '',
         },
+        {
+            displayName: 'Expires At',
+            name: 'expiresAt',
+            type: 'hidden',
+            default: 0,
+        },
     ];
     async preAuthentication(credentials) {
         const response = (await this.helpers.httpRequest({
@@ -43,7 +49,8 @@ class PersonioApi {
             },
             body: `client_id=${encodeURIComponent(credentials.clientId)}&client_secret=${encodeURIComponent(credentials.clientSecret)}&grant_type=client_credentials`,
         }));
-        return { accessToken: response.access_token };
+        const expiresAt = Date.now() + 23 * 60 * 60 * 1000; // 23 hours (token valid for 24h)
+        return { accessToken: response.access_token, expiresAt };
     }
     authenticate = {
         type: 'generic',
