@@ -1,0 +1,17 @@
+{
+	"node": "n8n-nodes-personio-hr.personioHr",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["HR"],
+	"resources": {
+		"primaryDocumentation": [
+			{
+				"url": "https://developer.personio.de/reference"
+			}
+		]
+	},
+	"alias": ["hr", "employee", "absence", "attendance", "personio"],
+	"subcategories": {
+		"HR": ["Employee Management"]
+	}
+}

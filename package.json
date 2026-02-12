@@ -1,0 +1,63 @@
+{
+	"name": "n8n-nodes-personio-hr",
+	"version": "0.1.1",
+	"description": "n8n community node for Personio HR platform (v2 API)",
+	"keywords": [
+		"n8n-community-node-package",
+		"n8n",
+		"personio",
+		"hr",
+		"employee",
+		"absence",
+		"attendance"
+	],
+	"license": "MIT",
+	"homepage": "https://pk-consulting.ai",
+	"author": {
+		"name": "Paul Karrmann",
+		"email": "paul@pk-consulting.ai"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/PK-Consulting/n8n-nodes-personio-hr.git"
+	},
+	"engines": {
+		"node": ">=20.0",
+		"pnpm": ">=9.0"
+	},
+	"main": "dist/nodes/Personio/Personio.node.js",
+	"scripts": {
+		"predev": "npm run build",
+		"dev": "n8n-node-dev start",
+		"build": "tsc && gulp build:icons",
+		"lint": "eslint src/ --ext .ts",
+		"lint:fix": "eslint src/ --ext .ts --fix",
+		"prepublishOnly": "npm run build && npm run lint"
+	},
+	"files": [
+		"dist",
+		"LICENSE"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"credentials": [
+			"dist/credentials/PersonioApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/Personio/Personio.node.js",
+			"dist/nodes/Personio/PersonioTrigger.node.js"
+		]
+	},
+	"devDependencies": {
+		"@types/node": "^20.0.0",
+		"@typescript-eslint/eslint-plugin": "^8.55.0",
+		"@typescript-eslint/parser": "^8.55.0",
+		"eslint": "^8.56.0",
+		"gulp": "^4.0.2",
+		"n8n-workflow": "^1.0.0",
+		"typescript": "^5.3.0"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
+}
