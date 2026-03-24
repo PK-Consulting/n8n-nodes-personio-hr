@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Personio = void 0;
+const n8n_workflow_1 = require("n8n-workflow");
 const PersonDescription_1 = require("./descriptions/PersonDescription");
 const EmploymentDescription_1 = require("./descriptions/EmploymentDescription");
 const AbsencePeriodDescription_1 = require("./descriptions/AbsencePeriodDescription");
@@ -23,8 +24,8 @@ class Personio {
             name: 'Personio',
         },
         usableAsTool: true,
-        inputs: ['main'],
-        outputs: ['main'],
+        inputs: [n8n_workflow_1.NodeConnectionTypes.Main],
+        outputs: [n8n_workflow_1.NodeConnectionTypes.Main],
         credentials: [
             {
                 name: 'personioApi',

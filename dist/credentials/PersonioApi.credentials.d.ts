@@ -2,6 +2,7 @@ import type { IAuthenticateGeneric, ICredentialDataDecryptedObject, ICredentialT
 export declare class PersonioApi implements ICredentialType {
     name: string;
     displayName: string;
+    icon: "file:personio.svg";
     documentationUrl: string;
     properties: INodeProperties[];
     preAuthentication(this: IHttpRequestHelper, credentials: ICredentialDataDecryptedObject): Promise<ICredentialDataDecryptedObject>;

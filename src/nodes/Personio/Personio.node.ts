@@ -1,4 +1,5 @@
 import type { INodeType, INodeTypeDescription } from 'n8n-workflow';
+import { NodeConnectionTypes } from 'n8n-workflow';
 
 import { personOperations, personFields } from './descriptions/PersonDescription';
 import { employmentOperations, employmentFields } from './descriptions/EmploymentDescription';
@@ -29,8 +30,8 @@ export class Personio implements INodeType {
 			name: 'Personio',
 		},
 		usableAsTool: true,
-		inputs: ['main'],
-		outputs: ['main'],
+		inputs: [NodeConnectionTypes.Main],
+		outputs: [NodeConnectionTypes.Main],
 		credentials: [
 			{
 				name: 'personioApi',

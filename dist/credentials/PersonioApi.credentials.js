@@ -4,6 +4,7 @@ exports.PersonioApi = void 0;
 class PersonioApi {
     name = 'personioApi';
     displayName = 'Personio API';
+    icon = 'file:personio.svg';
     documentationUrl = 'https://developer.personio.de/docs/getting-started-with-the-personio-api';
     properties = [
         {

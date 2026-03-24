@@ -10,6 +10,7 @@ import type {
 export class PersonioApi implements ICredentialType {
 	name = 'personioApi';
 	displayName = 'Personio API';
+	icon = 'file:personio.svg' as const;
 	documentationUrl = 'https://developer.personio.de/docs/getting-started-with-the-personio-api';
 
 	properties: INodeProperties[] = [
