@@ -631,7 +631,7 @@ exports.projectFields = [
                 preSend: [
                     async function (requestOptions) {
                         const body = requestOptions.body;
-                        const ids = body._personIds.split(',').map((id) => id.trim());
+                        const ids = body._personIds.split(',').map((id) => id.trim()).filter((id) => id);
                         requestOptions.body = ids.map((id) => ({ person: { id } }));
                         return requestOptions;
                     },

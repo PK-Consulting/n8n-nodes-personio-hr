@@ -223,6 +223,57 @@ exports.absencePeriodFields = [
         },
     },
     {
+        displayName: 'End Date',
+        name: 'endDate',
+        type: 'string',
+        required: true,
+        default: '',
+        placeholder: 'YYYY-MM-DDTHH:MM:SS',
+        displayOptions: {
+            show: {
+                resource: ['absencePeriod'],
+                operation: ['create'],
+            },
+        },
+        description: 'End date/time of the absence (e.g. 2025-03-05T00:00:00). Local time, no timezone offset.',
+        routing: {
+            send: {
+                type: 'body',
+                property: 'ends_at.date_time',
+            },
+        },
+    },
+    {
+        displayName: 'End Half Day',
+        name: 'endHalfDay',
+        type: 'options',
+        required: true,
+        default: 'SECOND_HALF',
+        displayOptions: {
+            show: {
+                resource: ['absencePeriod'],
+                operation: ['create'],
+            },
+        },
+        options: [
+            {
+                name: 'First Half',
+                value: 'FIRST_HALF',
+            },
+            {
+                name: 'Second Half (use for full day end)',
+                value: 'SECOND_HALF',
+            },
+        ],
+        description: 'SECOND_HALF = absence lasts until the end of the day (use for full days). FIRST_HALF = absence ends at midday.',
+        routing: {
+            send: {
+                type: 'body',
+                property: 'ends_at.type',
+            },
+        },
+    },
+    {
         displayName: 'Additional Fields',
         name: 'additionalFields',
         type: 'collection',
@@ -245,43 +296,6 @@ exports.absencePeriodFields = [
                     send: {
                         type: 'body',
                         property: 'comment',
-                    },
-                },
-            },
-            {
-                displayName: 'End Date',
-                name: 'endDate',
-                type: 'string',
-                default: '',
-                placeholder: 'YYYY-MM-DDTHH:MM:SS',
-                description: 'End date/time of the absence (e.g. 2025-03-05T00:00:00). Leave empty for open-ended.',
-                routing: {
-                    send: {
-                        type: 'body',
-                        property: 'ends_at.date_time',
-                    },
-                },
-            },
-            {
-                displayName: 'End Half Day',
-                name: 'endHalfDay',
-                type: 'options',
-                default: 'SECOND_HALF',
-                options: [
-                    {
-                        name: 'First Half',
-                        value: 'FIRST_HALF',
-                    },
-                    {
-                        name: 'Second Half (use for full day end)',
-                        value: 'SECOND_HALF',
-                    },
-                ],
-                description: 'SECOND_HALF = absence lasts until the end of the day (use for full days). FIRST_HALF = absence ends at midday.',
-                routing: {
-                    send: {
-                        type: 'body',
-                        property: 'ends_at.type',
                     },
                 },
             },

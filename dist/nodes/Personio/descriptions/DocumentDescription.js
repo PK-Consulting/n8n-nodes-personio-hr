@@ -79,6 +79,27 @@ exports.documentOperations = [
                         method: 'GET',
                         url: '/v2/document-management/documents',
                     },
+                    output: {
+                        postReceive: [
+                            {
+                                type: 'rootProperty',
+                                properties: {
+                                    property: '_data',
+                                },
+                            },
+                        ],
+                    },
+                    operations: {
+                        pagination: {
+                            type: 'generic',
+                            properties: {
+                                continue: '={{ Boolean($response.body._meta?.links?.next) }}',
+                                request: {
+                                    url: '={{ $response.body._meta?.links?.next?.href }}',
+                                },
+                            },
+                        },
+                    },
                 },
             },
             {
@@ -150,6 +171,11 @@ exports.documentFields = [
             },
         },
         description: 'Whether to return all results or only up to a given limit',
+        routing: {
+            send: {
+                paginate: '={{ $parameter.returnAll }}',
+            },
+        },
     },
     {
         displayName: 'Limit',

@@ -639,7 +639,7 @@ export const projectFields: INodeProperties[] = [
 						requestOptions: IHttpRequestOptions,
 					): Promise<IHttpRequestOptions> {
 						const body = requestOptions.body as Record<string, unknown>;
-						const ids = (body._personIds as string).split(',').map((id: string) => id.trim());
+						const ids = (body._personIds as string).split(',').map((id: string) => id.trim()).filter((id: string) => id);
 						requestOptions.body = ids.map((id: string) => ({ person: { id } }));
 						return requestOptions;
 					},
