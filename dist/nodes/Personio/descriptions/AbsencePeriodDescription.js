@@ -47,6 +47,16 @@ exports.absencePeriodOperations = [
                         method: 'GET',
                         url: '=/v2/absence-periods/{{$parameter.absencePeriodId}}',
                     },
+                    output: {
+                        postReceive: [
+                            {
+                                type: 'rootProperty',
+                                properties: {
+                                    property: '_data',
+                                },
+                            },
+                        ],
+                    },
                 },
             },
             {
@@ -58,6 +68,16 @@ exports.absencePeriodOperations = [
                     request: {
                         method: 'GET',
                         url: '=/v2/absence-periods/{{$parameter.absencePeriodId}}/breakdowns',
+                    },
+                    output: {
+                        postReceive: [
+                            {
+                                type: 'rootProperty',
+                                properties: {
+                                    property: '_data',
+                                },
+                            },
+                        ],
                     },
                 },
             },
@@ -473,27 +493,22 @@ exports.absencePeriodFields = [
                 displayName: 'End Half Day',
                 name: 'endHalfDay',
                 type: 'options',
-                default: 'none',
+                default: 'SECOND_HALF',
                 options: [
-                    {
-                        name: 'None (Full Day)',
-                        value: 'none',
-                    },
                     {
                         name: 'First Half',
                         value: 'FIRST_HALF',
                     },
                     {
-                        name: 'Second Half',
+                        name: 'Second Half (use for full day end)',
                         value: 'SECOND_HALF',
                     },
                 ],
-                description: 'Whether the end date is a half day',
+                description: 'Half-day type for the end date. Only set this together with End Date',
                 routing: {
                     send: {
                         type: 'body',
                         property: 'ends_at.type',
-                        value: '={{ $value === "none" ? null : $value }}',
                     },
                 },
             },
@@ -515,14 +530,10 @@ exports.absencePeriodFields = [
                 displayName: 'Start Half Day',
                 name: 'startHalfDay',
                 type: 'options',
-                default: 'none',
+                default: 'FIRST_HALF',
                 options: [
                     {
-                        name: 'None (Full Day)',
-                        value: 'none',
-                    },
-                    {
-                        name: 'First Half',
+                        name: 'First Half (use for full day start)',
                         value: 'FIRST_HALF',
                     },
                     {
@@ -530,12 +541,11 @@ exports.absencePeriodFields = [
                         value: 'SECOND_HALF',
                     },
                 ],
-                description: 'Whether the start date is a half day',
+                description: 'Half-day type for the start date. Only set this together with Start Date',
                 routing: {
                     send: {
                         type: 'body',
                         property: 'starts_from.type',
-                        value: '={{ $value === "none" ? null : $value }}',
                     },
                 },
             },

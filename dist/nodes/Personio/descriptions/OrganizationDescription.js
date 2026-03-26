@@ -56,6 +56,16 @@ exports.organizationOperations = [
                         method: 'GET',
                         url: '=/v2/legal-entities/{{$parameter.legalEntityId}}',
                     },
+                    output: {
+                        postReceive: [
+                            {
+                                type: 'rootProperty',
+                                properties: {
+                                    property: '_data',
+                                },
+                            },
+                        ],
+                    },
                 },
             },
         ],

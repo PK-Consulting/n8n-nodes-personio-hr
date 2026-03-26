@@ -47,6 +47,16 @@ exports.attendancePeriodOperations = [
                         method: 'GET',
                         url: '=/v2/attendance-periods/{{$parameter.attendancePeriodId}}',
                     },
+                    output: {
+                        postReceive: [
+                            {
+                                type: 'rootProperty',
+                                properties: {
+                                    property: '_data',
+                                },
+                            },
+                        ],
+                    },
                 },
             },
             {

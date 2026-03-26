@@ -1,4 +1,5 @@
-import type { INodeProperties } from 'n8n-workflow';
+import type { INodeProperties, IHttpRequestOptions } from 'n8n-workflow';
+import type { IExecuteSingleFunctions } from 'n8n-workflow';
 
 export const absencePeriodOperations: INodeProperties[] = [
 	{
@@ -46,6 +47,16 @@ export const absencePeriodOperations: INodeProperties[] = [
 						method: 'GET',
 						url: '=/v2/absence-periods/{{$parameter.absencePeriodId}}',
 					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: '_data',
+								},
+							},
+						],
+					},
 				},
 			},
 			{
@@ -57,6 +68,16 @@ export const absencePeriodOperations: INodeProperties[] = [
 					request: {
 						method: 'GET',
 						url: '=/v2/absence-periods/{{$parameter.absencePeriodId}}/breakdowns',
+					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: '_data',
+								},
+							},
+						],
 					},
 				},
 			},
@@ -224,6 +245,57 @@ export const absencePeriodFields: INodeProperties[] = [
 		},
 	},
 	{
+		displayName: 'End Date',
+		name: 'endDate',
+		type: 'string',
+		required: true,
+		default: '',
+		placeholder: 'YYYY-MM-DDTHH:MM:SS',
+		displayOptions: {
+			show: {
+				resource: ['absencePeriod'],
+				operation: ['create'],
+			},
+		},
+		description: 'End date/time of the absence (e.g. 2025-03-05T00:00:00). Local time, no timezone offset.',
+		routing: {
+			send: {
+				type: 'body',
+				property: 'ends_at.date_time',
+			},
+		},
+	},
+	{
+		displayName: 'End Half Day',
+		name: 'endHalfDay',
+		type: 'options',
+		required: true,
+		default: 'SECOND_HALF',
+		displayOptions: {
+			show: {
+				resource: ['absencePeriod'],
+				operation: ['create'],
+			},
+		},
+		options: [
+			{
+				name: 'First Half',
+				value: 'FIRST_HALF',
+			},
+			{
+				name: 'Second Half (use for full day end)',
+				value: 'SECOND_HALF',
+			},
+		],
+		description: 'SECOND_HALF = absence lasts until the end of the day (use for full days). FIRST_HALF = absence ends at midday.',
+		routing: {
+			send: {
+				type: 'body',
+				property: 'ends_at.type',
+			},
+		},
+	},
+	{
 		displayName: 'Additional Fields',
 		name: 'additionalFields',
 		type: 'collection',
@@ -246,43 +318,6 @@ export const absencePeriodFields: INodeProperties[] = [
 					send: {
 						type: 'body',
 						property: 'comment',
-					},
-				},
-			},
-			{
-				displayName: 'End Date',
-				name: 'endDate',
-				type: 'string',
-				default: '',
-				placeholder: 'YYYY-MM-DDTHH:MM:SS',
-				description: 'End date/time of the absence (e.g. 2025-03-05T00:00:00). Leave empty for open-ended.',
-				routing: {
-					send: {
-						type: 'body',
-						property: 'ends_at.date_time',
-					},
-				},
-			},
-			{
-				displayName: 'End Half Day',
-				name: 'endHalfDay',
-				type: 'options',
-				default: 'SECOND_HALF',
-				options: [
-					{
-						name: 'First Half',
-						value: 'FIRST_HALF',
-					},
-					{
-						name: 'Second Half (use for full day end)',
-						value: 'SECOND_HALF',
-					},
-				],
-				description: 'SECOND_HALF = absence lasts until the end of the day (use for full days). FIRST_HALF = absence ends at midday.',
-				routing: {
-					send: {
-						type: 'body',
-						property: 'ends_at.type',
 					},
 				},
 			},
@@ -462,27 +497,22 @@ export const absencePeriodFields: INodeProperties[] = [
 				displayName: 'End Half Day',
 				name: 'endHalfDay',
 				type: 'options',
-				default: 'none',
+				default: 'SECOND_HALF',
 				options: [
-					{
-						name: 'None (Full Day)',
-						value: 'none',
-					},
 					{
 						name: 'First Half',
 						value: 'FIRST_HALF',
 					},
 					{
-						name: 'Second Half',
+						name: 'Second Half (use for full day end)',
 						value: 'SECOND_HALF',
 					},
 				],
-				description: 'Whether the end date is a half day',
+				description: 'Half-day type for the end date. Only set this together with End Date',
 				routing: {
 					send: {
 						type: 'body',
 						property: 'ends_at.type',
-						value: '={{ $value === "none" ? null : $value }}',
 					},
 				},
 			},
@@ -504,14 +534,10 @@ export const absencePeriodFields: INodeProperties[] = [
 				displayName: 'Start Half Day',
 				name: 'startHalfDay',
 				type: 'options',
-				default: 'none',
+				default: 'FIRST_HALF',
 				options: [
 					{
-						name: 'None (Full Day)',
-						value: 'none',
-					},
-					{
-						name: 'First Half',
+						name: 'First Half (use for full day start)',
 						value: 'FIRST_HALF',
 					},
 					{
@@ -519,12 +545,11 @@ export const absencePeriodFields: INodeProperties[] = [
 						value: 'SECOND_HALF',
 					},
 				],
-				description: 'Whether the start date is a half day',
+				description: 'Half-day type for the start date. Only set this together with Start Date',
 				routing: {
 					send: {
 						type: 'body',
 						property: 'starts_from.type',
-						value: '={{ $value === "none" ? null : $value }}',
 					},
 				},
 			},

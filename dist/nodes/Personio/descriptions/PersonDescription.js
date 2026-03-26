@@ -47,6 +47,16 @@ exports.personOperations = [
                         method: 'GET',
                         url: '=/v2/persons/{{$parameter.personId}}',
                     },
+                    output: {
+                        postReceive: [
+                            {
+                                type: 'rootProperty',
+                                properties: {
+                                    property: '_data',
+                                },
+                            },
+                        ],
+                    },
                 },
             },
             {
@@ -293,13 +303,13 @@ exports.personFields = [
                         if (additionalFields.probationEndDate) {
                             employment.probation_end_date = additionalFields.probationEndDate;
                         }
-                        if (additionalFields.probationPeriodLength !== undefined && additionalFields.probationPeriodLength !== '') {
+                        if (additionalFields.probationPeriodLength !== undefined) {
                             employment.probation_period_length = additionalFields.probationPeriodLength;
                         }
-                        if (additionalFields.weeklyWorkingHours !== undefined && additionalFields.weeklyWorkingHours !== '') {
+                        if (additionalFields.weeklyWorkingHours !== undefined) {
                             employment.weekly_working_hours = additionalFields.weeklyWorkingHours;
                         }
-                        if (additionalFields.fullTimeWeeklyWorkingHours !== undefined && additionalFields.fullTimeWeeklyWorkingHours !== '') {
+                        if (additionalFields.fullTimeWeeklyWorkingHours !== undefined) {
                             employment.full_time_weekly_working_hours = additionalFields.fullTimeWeeklyWorkingHours;
                         }
                         // Department (org_units with type "department")
@@ -456,7 +466,7 @@ exports.personFields = [
                 displayName: 'Probation Period Length',
                 name: 'probationPeriodLength',
                 type: 'number',
-                default: '',
+                default: 0,
                 description: 'Probation period in days (mutually exclusive with Probation End Date)',
                 typeOptions: {
                     minValue: 0,
@@ -466,7 +476,7 @@ exports.personFields = [
                 displayName: 'Weekly Working Hours',
                 name: 'weeklyWorkingHours',
                 type: 'number',
-                default: '',
+                default: 0,
                 description: 'Contracted working hours per week (e.g. 37.5)',
                 typeOptions: {
                     minValue: 0,
@@ -477,7 +487,7 @@ exports.personFields = [
                 displayName: 'Full-Time Weekly Working Hours',
                 name: 'fullTimeWeeklyWorkingHours',
                 type: 'number',
-                default: '',
+                default: 0,
                 description: 'Full-time hours benchmark for FTE calculation (e.g. 40)',
                 typeOptions: {
                     minValue: 0,
@@ -865,6 +875,7 @@ exports.personFields = [
                     send: {
                         type: 'query',
                         property: 'updated_at.gt',
+                        propertyInDotNotation: false,
                     },
                 },
             },

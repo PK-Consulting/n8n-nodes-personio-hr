@@ -23,6 +23,16 @@ exports.absenceTypeOperations = [
                         method: 'GET',
                         url: '=/v2/absence-types/{{$parameter.absenceTypeId}}',
                     },
+                    output: {
+                        postReceive: [
+                            {
+                                type: 'rootProperty',
+                                properties: {
+                                    property: '_data',
+                                },
+                            },
+                        ],
+                    },
                 },
             },
             {

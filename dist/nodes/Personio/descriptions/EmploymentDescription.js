@@ -23,6 +23,16 @@ exports.employmentOperations = [
                         method: 'GET',
                         url: '=/v2/persons/{{$parameter.personId}}/employments/{{$parameter.employmentId}}',
                     },
+                    output: {
+                        postReceive: [
+                            {
+                                type: 'rootProperty',
+                                properties: {
+                                    property: '_data',
+                                },
+                            },
+                        ],
+                    },
                 },
             },
             {
@@ -44,6 +54,17 @@ exports.employmentOperations = [
                                 },
                             },
                         ],
+                    },
+                    operations: {
+                        pagination: {
+                            type: 'generic',
+                            properties: {
+                                continue: '={{ Boolean($response.body._meta?.links?.next) }}',
+                                request: {
+                                    url: '={{ $response.body._meta?.links?.next?.href }}',
+                                },
+                            },
+                        },
                     },
                 },
             },
@@ -93,6 +114,51 @@ exports.employmentFields = [
             },
         },
         description: 'The ID of the employment record',
+    },
+    // ----------------------------------
+    //         employment: getAll
+    // ----------------------------------
+    {
+        displayName: 'Return All',
+        name: 'returnAll',
+        type: 'boolean',
+        default: false,
+        displayOptions: {
+            show: {
+                resource: ['employment'],
+                operation: ['getAll'],
+            },
+        },
+        description: 'Whether to return all results or only up to a given limit',
+        routing: {
+            send: {
+                paginate: '={{ $parameter.returnAll }}',
+            },
+        },
+    },
+    {
+        displayName: 'Limit',
+        name: 'limit',
+        type: 'number',
+        default: 50,
+        typeOptions: {
+            minValue: 1,
+            maxValue: 50,
+        },
+        displayOptions: {
+            show: {
+                resource: ['employment'],
+                operation: ['getAll'],
+                returnAll: [false],
+            },
+        },
+        description: 'Max number of results to return',
+        routing: {
+            send: {
+                type: 'query',
+                property: 'limit',
+            },
+        },
     },
     // ----------------------------------
     //         employment: update — required fields
@@ -212,7 +278,7 @@ exports.employmentFields = [
                 displayName: 'Full-Time Weekly Working Hours',
                 name: 'fullTimeWeeklyWorkingHours',
                 type: 'number',
-                default: '',
+                default: 0,
                 description: 'Full-time hours benchmark for FTE calculation (e.g. 40)',
                 typeOptions: {
                     minValue: 0,
@@ -252,7 +318,7 @@ exports.employmentFields = [
                 displayName: 'Probation Period Length',
                 name: 'probationPeriodLength',
                 type: 'number',
-                default: '',
+                default: 0,
                 description: 'Probation period in days (mutually exclusive with Probation End Date)',
                 typeOptions: {
                     minValue: 0,
@@ -276,7 +342,7 @@ exports.employmentFields = [
                 displayName: 'Weekly Working Hours',
                 name: 'weeklyWorkingHours',
                 type: 'number',
-                default: '',
+                default: 0,
                 description: 'Contracted working hours per week (e.g. 37.5)',
                 typeOptions: {
                     minValue: 0,
@@ -299,13 +365,13 @@ exports.employmentFields = [
                         if (updateFields.probationEndDate) {
                             body.probation_end_date = updateFields.probationEndDate;
                         }
-                        if (updateFields.probationPeriodLength !== undefined && updateFields.probationPeriodLength !== '') {
+                        if (updateFields.probationPeriodLength !== undefined) {
                             body.probation_period_length = updateFields.probationPeriodLength;
                         }
-                        if (updateFields.weeklyWorkingHours !== undefined && updateFields.weeklyWorkingHours !== '') {
+                        if (updateFields.weeklyWorkingHours !== undefined) {
                             body.weekly_working_hours = updateFields.weeklyWorkingHours;
                         }
-                        if (updateFields.fullTimeWeeklyWorkingHours !== undefined && updateFields.fullTimeWeeklyWorkingHours !== '') {
+                        if (updateFields.fullTimeWeeklyWorkingHours !== undefined) {
                             body.full_time_weekly_working_hours = updateFields.fullTimeWeeklyWorkingHours;
                         }
                         // Nested object fields

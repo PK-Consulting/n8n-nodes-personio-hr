@@ -59,6 +59,16 @@ export const projectOperations: INodeProperties[] = [
 						method: 'GET',
 						url: '=/v2/projects/{{$parameter.projectId}}',
 					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: '_data',
+								},
+							},
+						],
+					},
 				},
 			},
 			{
@@ -103,6 +113,16 @@ export const projectOperations: INodeProperties[] = [
 					request: {
 						method: 'GET',
 						url: '=/v2/projects/{{$parameter.projectId}}/members',
+					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: '_data',
+								},
+							},
+						],
 					},
 				},
 			},

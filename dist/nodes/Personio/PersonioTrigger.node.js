@@ -147,7 +147,8 @@ class PersonioTrigger {
                     }
                     return true;
                 }
-                catch (_error) {
+                catch (error) {
+                    this.logger.warn(`Failed to check Personio webhook ${webhookData.webhookId}: ${error.message}`);
                     delete webhookData.webhookId;
                     return false;
                 }
@@ -185,8 +186,8 @@ class PersonioTrigger {
                     try {
                         await GenericFunctions_1.personioApiRequest.call(this, 'DELETE', `/v2/webhooks/${webhookData.webhookId}`);
                     }
-                    catch (_error) {
-                        // If deletion fails, still clean up static data
+                    catch (error) {
+                        this.logger.warn(`Failed to deregister Personio webhook ${webhookData.webhookId}: ${error.message}`);
                     }
                     delete webhookData.webhookId;
                 }

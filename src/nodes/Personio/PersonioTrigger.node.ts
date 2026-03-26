@@ -166,7 +166,8 @@ export class PersonioTrigger implements INodeType {
 					}
 
 					return true;
-				} catch (_error) {
+				} catch (error) {
+					this.logger.warn(`Failed to check Personio webhook ${webhookData.webhookId}: ${(error as Error).message}`);
 					delete webhookData.webhookId;
 					return false;
 				}
@@ -224,8 +225,8 @@ export class PersonioTrigger implements INodeType {
 							'DELETE',
 							`/v2/webhooks/${webhookData.webhookId}`,
 						);
-					} catch (_error) {
-						// If deletion fails, still clean up static data
+					} catch (error) {
+						this.logger.warn(`Failed to deregister Personio webhook ${webhookData.webhookId}: ${(error as Error).message}`);
 					}
 
 					delete webhookData.webhookId;

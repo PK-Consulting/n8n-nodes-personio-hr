@@ -47,6 +47,16 @@ export const personOperations: INodeProperties[] = [
 						method: 'GET',
 						url: '=/v2/persons/{{$parameter.personId}}',
 					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: '_data',
+								},
+							},
+						],
+					},
 				},
 			},
 			{
@@ -301,13 +311,13 @@ export const personFields: INodeProperties[] = [
 						if (additionalFields.probationEndDate) {
 							employment.probation_end_date = additionalFields.probationEndDate as string;
 						}
-						if (additionalFields.probationPeriodLength !== undefined && additionalFields.probationPeriodLength !== '') {
+						if (additionalFields.probationPeriodLength !== undefined) {
 							employment.probation_period_length = additionalFields.probationPeriodLength as number;
 						}
-						if (additionalFields.weeklyWorkingHours !== undefined && additionalFields.weeklyWorkingHours !== '') {
+						if (additionalFields.weeklyWorkingHours !== undefined) {
 							employment.weekly_working_hours = additionalFields.weeklyWorkingHours as number;
 						}
-						if (additionalFields.fullTimeWeeklyWorkingHours !== undefined && additionalFields.fullTimeWeeklyWorkingHours !== '') {
+						if (additionalFields.fullTimeWeeklyWorkingHours !== undefined) {
 							employment.full_time_weekly_working_hours = additionalFields.fullTimeWeeklyWorkingHours as number;
 						}
 
@@ -469,7 +479,7 @@ export const personFields: INodeProperties[] = [
 				displayName: 'Probation Period Length',
 				name: 'probationPeriodLength',
 				type: 'number',
-				default: '',
+				default: 0,
 				description: 'Probation period in days (mutually exclusive with Probation End Date)',
 				typeOptions: {
 					minValue: 0,
@@ -479,7 +489,7 @@ export const personFields: INodeProperties[] = [
 				displayName: 'Weekly Working Hours',
 				name: 'weeklyWorkingHours',
 				type: 'number',
-				default: '',
+				default: 0,
 				description: 'Contracted working hours per week (e.g. 37.5)',
 				typeOptions: {
 					minValue: 0,
@@ -490,7 +500,7 @@ export const personFields: INodeProperties[] = [
 				displayName: 'Full-Time Weekly Working Hours',
 				name: 'fullTimeWeeklyWorkingHours',
 				type: 'number',
-				default: '',
+				default: 0,
 				description: 'Full-time hours benchmark for FTE calculation (e.g. 40)',
 				typeOptions: {
 					minValue: 0,
@@ -892,6 +902,7 @@ export const personFields: INodeProperties[] = [
 					send: {
 						type: 'query',
 						property: 'updated_at.gt',
+						propertyInDotNotation: false,
 					},
 				},
 			},

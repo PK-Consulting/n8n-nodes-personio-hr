@@ -22,6 +22,16 @@ export const absenceTypeOperations: INodeProperties[] = [
 						method: 'GET',
 						url: '=/v2/absence-types/{{$parameter.absenceTypeId}}',
 					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: '_data',
+								},
+							},
+						],
+					},
 				},
 			},
 			{
