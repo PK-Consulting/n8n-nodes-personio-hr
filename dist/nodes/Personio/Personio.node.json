@@ -10,8 +10,5 @@
 			}
 		]
 	},
-	"alias": ["hr", "employee", "absence", "attendance", "personio"],
-	"subcategories": {
-		"HR": ["Employee Management"]
-	}
+	"alias": ["hr", "employee", "absence", "attendance", "personio"]
 }

@@ -10,8 +10,5 @@
 			}
 		]
 	},
-	"alias": ["hr", "employee", "webhook", "personio", "trigger"],
-	"subcategories": {
-		"HR": ["Employee Management"]
-	}
+	"alias": ["hr", "employee", "webhook", "personio", "trigger"]
 }
