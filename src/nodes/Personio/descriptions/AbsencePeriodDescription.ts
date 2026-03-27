@@ -1,5 +1,4 @@
-import type { INodeProperties, IHttpRequestOptions } from 'n8n-workflow';
-import type { IExecuteSingleFunctions } from 'n8n-workflow';
+import type { INodeProperties } from 'n8n-workflow';
 
 export const absencePeriodOperations: INodeProperties[] = [
 	{
