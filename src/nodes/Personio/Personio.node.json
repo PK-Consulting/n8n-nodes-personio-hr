@@ -2,7 +2,7 @@
 	"node": "n8n-nodes-personio-hr.personioHr",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
-	"categories": ["HR"],
+	"categories": ["Miscellaneous"],
 	"resources": {
 		"primaryDocumentation": [
 			{
