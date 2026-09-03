@@ -93,9 +93,9 @@ exports.documentOperations = [
                         pagination: {
                             type: 'generic',
                             properties: {
-                                continue: '={{ Boolean($response.body._meta?.links?.next) }}',
+                                continue: '={{ !!$response.body?._meta?.links?.next?.href && !!$response.body?._data?.length }}',
                                 request: {
-                                    url: '={{ $response.body._meta?.links?.next?.href }}',
+                                    url: '={{ $response.body?._meta?.links?.next?.href ?? $request.url }}',
                                 },
                             },
                         },
