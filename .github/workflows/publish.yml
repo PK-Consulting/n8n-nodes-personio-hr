@@ -1,24 +1,50 @@
+# Publishes this package to npm with a provenance attestation.
+#
+# n8n only accepts new versions of verified community nodes that were published
+# from GitHub Actions with provenance (required since May 1 2026), so releases
+# must go through this workflow rather than a local `npm publish`.
+#
+# Release process: bump the version in package.json on main, then create a
+# GitHub Release tagged vX.Y.Z. Publishing the release triggers this workflow.
+#
+# Authentication (one-time setup on npmjs.com):
+#   Option A, recommended: Package settings > Publish access > Trusted Publishers
+#     > Add a publisher > GitHub Actions, with
+#       Repository owner: PK-Consulting
+#       Repository name:  n8n-nodes-personio-hr
+#       Workflow name:    publish.yml
+#     and leave the NPM_TOKEN repository secret unset.
+#   Option B, fallback: a granular npm access token with publish rights stored as
+#     the NPM_TOKEN repository secret.
+
 name: Publish to npm
 
 on:
   release:
     types: [published]
+  workflow_dispatch: # manual retry of a publish, e.g. after fixing npm auth
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write
+      id-token: write # needed to mint the OIDC token for provenance and trusted publishing
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org
+          node-version: 'lts/*'
+      - name: Ensure npm supports trusted publishing
+        run: npm install -g npm@latest && npm --version
       - run: npm ci
       - run: npm run build
       - run: npm run lint
-      - run: npm publish --provenance --access public
+      - name: Publish
+        run: |
+          if [ -n "$NPM_TOKEN" ]; then
+            npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          fi
+          npm publish --provenance --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
