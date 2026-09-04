@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.absencePeriodFields = exports.absencePeriodOperations = void 0;
+const GenericFunctions_1 = require("../GenericFunctions");
 exports.absencePeriodOperations = [
     {
         displayName: 'Operation',
@@ -49,12 +50,7 @@ exports.absencePeriodOperations = [
                     },
                     output: {
                         postReceive: [
-                            {
-                                type: 'rootProperty',
-                                properties: {
-                                    property: '_data',
-                                },
-                            },
+                            GenericFunctions_1.extractData,
                         ],
                     },
                 },
@@ -71,12 +67,7 @@ exports.absencePeriodOperations = [
                     },
                     output: {
                         postReceive: [
-                            {
-                                type: 'rootProperty',
-                                properties: {
-                                    property: '_data',
-                                },
-                            },
+                            GenericFunctions_1.extractData,
                         ],
                     },
                 },
@@ -93,12 +84,7 @@ exports.absencePeriodOperations = [
                     },
                     output: {
                         postReceive: [
-                            {
-                                type: 'rootProperty',
-                                properties: {
-                                    property: '_data',
-                                },
-                            },
+                            GenericFunctions_1.extractData,
                         ],
                     },
                     operations: {

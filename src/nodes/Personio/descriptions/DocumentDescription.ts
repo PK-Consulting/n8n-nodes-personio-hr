@@ -4,6 +4,7 @@ import type {
 	INodeExecutionData,
 	IN8nHttpFullResponse,
 } from 'n8n-workflow';
+import { extractData } from '../GenericFunctions';
 
 export const documentOperations: INodeProperties[] = [
 	{
@@ -97,12 +98,7 @@ export const documentOperations: INodeProperties[] = [
 					},
 					output: {
 						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: '_data',
-								},
-							},
+							extractData,
 						],
 					},
 					operations: {

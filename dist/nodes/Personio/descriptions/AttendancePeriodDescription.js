@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.attendancePeriodFields = exports.attendancePeriodOperations = void 0;
+const GenericFunctions_1 = require("../GenericFunctions");
 exports.attendancePeriodOperations = [
     {
         displayName: 'Operation',
@@ -49,12 +50,7 @@ exports.attendancePeriodOperations = [
                     },
                     output: {
                         postReceive: [
-                            {
-                                type: 'rootProperty',
-                                properties: {
-                                    property: '_data',
-                                },
-                            },
+                            GenericFunctions_1.extractData,
                         ],
                     },
                 },
@@ -71,12 +67,7 @@ exports.attendancePeriodOperations = [
                     },
                     output: {
                         postReceive: [
-                            {
-                                type: 'rootProperty',
-                                properties: {
-                                    property: '_data',
-                                },
-                            },
+                            GenericFunctions_1.extractData,
                         ],
                     },
                     operations: {

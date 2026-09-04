@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.compensationFields = exports.compensationOperations = void 0;
+const GenericFunctions_1 = require("../GenericFunctions");
 exports.compensationOperations = [
     {
         displayName: 'Operation',
@@ -49,12 +50,7 @@ exports.compensationOperations = [
                     },
                     output: {
                         postReceive: [
-                            {
-                                type: 'rootProperty',
-                                properties: {
-                                    property: '_data',
-                                },
-                            },
+                            GenericFunctions_1.extractData,
                         ],
                     },
                     operations: {
@@ -82,12 +78,7 @@ exports.compensationOperations = [
                     },
                     output: {
                         postReceive: [
-                            {
-                                type: 'rootProperty',
-                                properties: {
-                                    property: '_data',
-                                },
-                            },
+                            GenericFunctions_1.extractData,
                         ],
                     },
                     operations: {

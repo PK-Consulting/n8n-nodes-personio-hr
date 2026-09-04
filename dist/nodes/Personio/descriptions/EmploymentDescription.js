@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.employmentFields = exports.employmentOperations = void 0;
+const GenericFunctions_1 = require("../GenericFunctions");
 exports.employmentOperations = [
     {
         displayName: 'Operation',
@@ -25,12 +26,7 @@ exports.employmentOperations = [
                     },
                     output: {
                         postReceive: [
-                            {
-                                type: 'rootProperty',
-                                properties: {
-                                    property: '_data',
-                                },
-                            },
+                            GenericFunctions_1.extractData,
                         ],
                     },
                 },
@@ -47,12 +43,7 @@ exports.employmentOperations = [
                     },
                     output: {
                         postReceive: [
-                            {
-                                type: 'rootProperty',
-                                properties: {
-                                    property: '_data',
-                                },
-                            },
+                            GenericFunctions_1.extractData,
                         ],
                     },
                     operations: {

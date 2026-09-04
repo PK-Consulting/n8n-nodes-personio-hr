@@ -1,5 +1,6 @@
 import type { INodeProperties, IHttpRequestOptions } from 'n8n-workflow';
 import type { IExecuteSingleFunctions } from 'n8n-workflow';
+import { extractData } from '../GenericFunctions';
 
 export const projectOperations: INodeProperties[] = [
 	{
@@ -61,12 +62,7 @@ export const projectOperations: INodeProperties[] = [
 					},
 					output: {
 						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: '_data',
-								},
-							},
+							extractData,
 						],
 					},
 				},
@@ -83,12 +79,7 @@ export const projectOperations: INodeProperties[] = [
 					},
 					output: {
 						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: '_data',
-								},
-							},
+							extractData,
 						],
 					},
 					operations: {
@@ -116,12 +107,7 @@ export const projectOperations: INodeProperties[] = [
 					},
 					output: {
 						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: '_data',
-								},
-							},
+							extractData,
 						],
 					},
 				},

@@ -1,4 +1,5 @@
 import type { INodeProperties } from 'n8n-workflow';
+import { extractData } from '../GenericFunctions';
 
 export const absenceTypeOperations: INodeProperties[] = [
 	{
@@ -24,12 +25,7 @@ export const absenceTypeOperations: INodeProperties[] = [
 					},
 					output: {
 						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: '_data',
-								},
-							},
+							extractData,
 						],
 					},
 				},
@@ -46,12 +42,7 @@ export const absenceTypeOperations: INodeProperties[] = [
 					},
 					output: {
 						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: '_data',
-								},
-							},
+							extractData,
 						],
 					},
 					operations: {
